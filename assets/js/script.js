@@ -1,57 +1,65 @@
 var countDownEl = document.getElementById('timer');
 var startQuizBtn = document.getElementById('start');
+var currentQuestion = 0;
+var showQuestion = document.getElementById('show-question')
+var choiceA = document.getElementById("btn-A1");
+var choiceB = document.getElementById("btn-A2");
+var choiceC = document.getElementById("btn-A3");
+var choiceD = document.getElementById('btn-A4');
+var timeLeft = 75;
+startQuizBtn.addEventListener("click", timercountdown);
 
 // Create the Questions
 var quizQuestions = [
 { question: 'What Color is the Sky?',
 answer: {
-A: "Green",
-B: "Red",
-C: "Blue",
-D: "Black"
+answerA: "Green",
+answerB: "Red",
+answerC: "Blue",
+answerD: "Black"
 },
-correctAnswer: "C"
-}, 
+correctAnswer: "answerC",
+},
 { question: 'Which animal is white?',
 answer: {
-A: "Zebra",
-B: "Giraffe",
-C: "Aligator",
-D: "Lion"
+answerA: "Zebra",
+answerB: "Giraffe",
+answerC: "Aligator",
+answerD: "Lion"
 },
-correctAnswer: "A"
+correctAnswer: "answerA"
 }, 
 { question: 'What is not a food',
 answer: {
-A: "Plastic",
-B: "Potato",
-C: "Steak",
-D: "Chip"
+answerA: "Plastic",
+answerB: "Potato",
+answerC: "Steak",
+answerD: "Chip"
 },
-correctAnswer: "A"
+correctAnswer: "answerA"
 }, 
 { question: 'Which is NOT a number?',
 answer: {
-A: "4",
-B: "L",
-C: "3",
-D: "2"
+answerA: "4",
+answerB: "L",
+answerC: "3",
+answerD: "2"
 },
-correctAnswer: "B"
+correctAnswer: "answerB"
 }, 
 { question: 'Which is not a breed of dog?',
 answer: {
-A: "Labrador Retriever",
-B: "German Sheperd",
-C: "Husky",
-D: "Tabby"
+answerA: "Labrador Retriever",
+answerB: "German Sheperd",
+answerC: "Husky",
+answerD: "Tabby"
 },
-correctAnswer: "D"
-}, 
+correctAnswer: "answerD"
+}
 ];
 
 function timercountdown() {
-var timeLeft = 5;
+
 
 // Create the timer function
 var quizTimer = setInterval(function(){
@@ -71,8 +79,52 @@ else {
     clearInterval(quizTimer);
 }
 }, 1000);
-
+addQuestions();
 }
-startQuizBtn.onclick = timercountdown;
+
 
 //Create the Quiz Function
+function addQuestions (){
+    if ( currentQuestion < 5){
+    
+        showQuestion.innerHTML = quizQuestions[currentQuestion].question;
+        choiceA.innerHTML = quizQuestions[currentQuestion].answer.answerA;
+        choiceB.innerHTML = quizQuestions[currentQuestion].answer.answerB;
+        choiceC.innerHTML = quizQuestions[currentQuestion].answer.answerC;
+        choiceD.innerHTML = quizQuestions[currentQuestion].answer.answerD;
+
+       
+    }
+    
+    }
+    choiceA.addEventListener("click", getCorrect);
+    choiceB.addEventListener("click", getCorrect);
+    choiceC.addEventListener("click", getCorrect);
+    choiceD.addEventListener("click", getCorrect);
+
+// check to find correct answer
+function getCorrect (){
+    
+    if(choiceA.value[currentQuestion] !== quizQuestions[currentQuestion].correctAnswer) {
+        timeLeft -= 15;
+    }
+    currentQuestion++;
+
+    showQuestion.innerHTML = quizQuestions[currentQuestion].question;
+    choiceA.innerHTML = quizQuestions[currentQuestion].answer.answerA;
+    choiceB.innerHTML = quizQuestions[currentQuestion].answer.answerB;
+    choiceC.innerHTML = quizQuestions[currentQuestion].answer.answerC;
+    choiceD.innerHTML = quizQuestions[currentQuestion].answer.answerD;
+    
+}
+
+
+
+// Stop the quiz and take user to enter their score
+function endQuiz(){
+var finalScore = timeLeft;
+var finalScoreNotify = "Your final Score: " + finalScore;
+finalScoreNotify = document.getElementById("show-quiz");
+
+
+}
